@@ -112,3 +112,46 @@ def test_counter_increment():
 
     r2 = client.get("/color/khaki")
     assert r2.json()["n"] == 2
+
+
+def test_color_random_text_endpoint():
+    response = client.get("/color/random/text")
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+    assert "Color:" in response.text
+    assert "Font Color:" in response.text
+    assert "RGB:" in response.text
+    assert "HEX:" in response.text
+    assert "n: 1" in response.text
+
+
+def test_color_text_by_name():
+    response = client.get("/color/khaki/text")
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+    assert "#F0E68C" in response.text
+    assert "(240,230,140)" in response.text
+    assert "khaki" in response.text
+    assert "Font Color: black" in response.text
+
+
+def test_color_text_by_hex():
+    response = client.get("/color/F0E68C/text")
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+    assert "khaki" in response.text
+
+    response_with_hash = client.get("/color/%23F0E68C/text")
+    assert response_with_hash.status_code == 200
+    assert "khaki" in response_with_hash.text
+
+
+def test_color_text_not_found():
+    response = client.get("/color/unknowncolor123/text")
+    assert response.status_code == 404
+
+
+def test_dark_color_font_selection():
+    response = client.get("/color/black/text")
+    assert response.status_code == 200
+    assert "Font Color: white" in response.text

@@ -4,8 +4,10 @@ A lightweight FastAPI application that returns color definitions along with requ
 
 ## Endpoints
 
-- `GET /color/random`: Returns a random color from the dataset along with request metadata.
-- `GET /color/{color_spec}`: Returns a specific color by English name (e.g., `khaki`) or hex code (e.g., `F0E68C` or `#F0E68C`).
+- `GET /color/random`: Returns a random color from the dataset along with request metadata in JSON format.
+- `GET /color/random/text`: Returns an HTML response with a random color background, readable text color, color information, and request metadata.
+- `GET /color/{color_spec}`: Returns a specific color by English name (e.g., `khaki`) or hex code (e.g., `F0E68C` or `#F0E68C`) in JSON format.
+- `GET /color/{color_spec}/text`: Returns an HTML response for a specific color by name or hex code with styled background, readable text color, color information, and request metadata.
 - `GET /colors`: Returns the full dictionary of CSS3 named colors.
 - `GET /favicon.ico`: Returns `204 No Content` without incrementing the request counter.
 
