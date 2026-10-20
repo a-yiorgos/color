@@ -180,3 +180,31 @@ def get_color_by_spec(color_spec: str) -> Optional[Dict[str, Dict[str, str]]]:
 def get_all_colors() -> Dict[str, Dict[str, str]]:
     """Returns the complete dictionary of colors."""
     return COLOR_DATA
+
+
+def get_readable_font_color(color_info: Dict[str, str]) -> Dict[str, str]:
+    """
+    Given a color dict with 'rgb' key formatted as '(r,g,b)',
+    calculates relative luminance and returns the COLOR_DATA entry for 'black' or 'white'
+    that maximizes contrast for readability.
+    """
+    rgb_str = color_info.get("rgb", "(0,0,0)").strip("()")
+    r, g, b = [int(c.strip()) for c in rgb_str.split(",")]
+
+    def calc_lin(c: int) -> float:
+        c_s = c / 255.0
+        return c_s / 12.92 if c_s <= 0.04045 else ((c_s + 0.055) / 1.055) ** 2.4
+
+    r_lin = calc_lin(r)
+    g_lin = calc_lin(g)
+    b_lin = calc_lin(b)
+
+    luminance = 0.2126 * r_lin + 0.7152 * g_lin + 0.0722 * b_lin
+
+    contrast_white = (1.0 + 0.05) / (luminance + 0.05)
+    contrast_black = (luminance + 0.05) / (0.0 + 0.05)
+
+    if contrast_white > contrast_black:
+        return COLOR_DATA["white"]
+    else:
+        return COLOR_DATA["black"]
