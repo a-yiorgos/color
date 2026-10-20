@@ -46,15 +46,25 @@ def test_headers_extraction():
     headers = {
         "X-Real-IP": "172.31.18.68",
         "X-Forwarded-For": "172.31.18.68, 10.1.167.46",
-        "X-Forwarded-Email": "yiorgos.adamopoulos@storfund.com",
+        "X-Forwarded-Email": "user@example.com",
+        "Authorization": "Bearer secrettoken123",
+        "X-Auth-Request-User": "example_user",
+        "X-Auth-Request-Email": "user@example.com",
+        "X-Auth-Request-Access-Token": "accesstoken123",
+        "X-Auth-Request-Groups": "admin,devs",
     }
     response = client.get("/color/random", headers=headers)
     assert response.status_code == 200
     data = response.json()
     assert data["X-Real-IP"] == "172.31.18.68"
     assert data["X-Forwarded-For"] == "172.31.18.68, 10.1.167.46"
-    assert data["X-Forwarded-Email"] == "yiorgos.adamopoulos@storfund.com"
-    assert data["X-Auth-Request-User"] == ""
+    assert data["X-Forwarded-Email"] == "user@example.com"
+    assert data["Authorization"] == "Bearer secrettoken123"
+    assert data["X-Auth-Request-User"] == "example_user"
+    assert data["X-Auth-Request-Email"] == "user@example.com"
+    assert data["X-Auth-Request-Access-Token"] == "accesstoken123"
+    assert data["X-Auth-Request-Groups"] == "admin,devs"
+    assert data["X-Forwarded-User"] == ""
 
 
 def test_color_by_name():

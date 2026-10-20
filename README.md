@@ -29,7 +29,22 @@ A lightweight FastAPI application that returns color definitions along with requ
   "X-Forwarded-For": "172.31.18.68, 10.1.167.46",
   "X-Auth-Request-User": "",
   "X-Auth-Request-Email": "",
-  "X-Forwarded-Email": "yiorgos.adamopoulos@storfund.com"
+  "X-Auth-Request-Access-Token": "",
+  "X-Auth-Request-Groups": "",
+  "X-Auth-Request-Preferred-Username": "",
+  "X-Auth-Request-Token": "",
+  "X-Auth-Request-Redirect": "",
+  "X-Forwarded-Email": "user@example.com",
+  "X-Forwarded-User": "",
+  "X-Forwarded-Groups": "",
+  "X-Forwarded-Preferred-Username": "",
+  "X-Forwarded-Access-Token": "",
+  "X-Forwarded-Id-Token": "",
+  "X-Forwarded-Roles": "",
+  "X-Forwarded-Proto": "",
+  "X-Forwarded-Host": "",
+  "Authorization": "",
+  "User-Agent": ""
 }
 ```
 
